@@ -1,19 +1,19 @@
-import PictureRenderer from './pictureRenderer.js';
+import { fetchPhotos } from './server.js';
+import { setFormSubmit } from './form.js';
+import { initFilters } from './filter.js';
+import { renderPhotos } from './bigPictures.js';
+import { alertDataLoadError } from './utils.js';
 
-const pictures = [
-  {
-    url: './photos/1.jpg',
-    description: 'Описание изображения 1',
-    likes: 10,
-    comments: 5
-  },
-  {
-    url: './photos/2.jpg',
-    description: 'Описание изображения 2',
-    likes: 20,
-    comments: 10
-  },
-];
+let photos = [];
 
-const renderer = new PictureRenderer('.pictures', '#picture');
-renderer.renderPictures(pictures);
+const handleSuccessLoad = (data) => {
+  photos = data.slice();
+  renderPhotos(photos);
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+};
+
+fetchPhotos(handleSuccessLoad, alertDataLoadError).then();
+initFilters();
+setFormSubmit();
+
+export {photos};
