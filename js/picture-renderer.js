@@ -21,5 +21,5 @@ class PictureRenderer {
     this.container.appendChild(fragment);
   }
 }
- 
+
 export default PictureRenderer;
